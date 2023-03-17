@@ -38,7 +38,7 @@ public class MyPublishers {
     public static Flux<Integer> diceValuesNoFour() {
         return Flux.range(1, 6).map(x -> {
             if (x == 4) {
-                throw new IllegalStateException("Lost die " + x);
+                throw new IllegalStateException("Lost dice " + x);
             } else {
                 return x;
             }
