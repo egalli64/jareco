@@ -10,6 +10,8 @@
         </encoder>
     </appender>
 
+    <logger name="reactor" level="INFO"/>
+
     <root level="trace">
         <appender-ref ref="STDOUT" />
     </root>
