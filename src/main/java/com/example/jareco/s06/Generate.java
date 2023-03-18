@@ -5,6 +5,9 @@
  */
 package com.example.jareco.s06;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import reactor.core.publisher.Flux;
 import reactor.util.function.Tuples;
 
@@ -14,12 +17,16 @@ import reactor.util.function.Tuples;
  * Synchronous one-by-one. Generation is based on a state.
  */
 public class Generate {
+    private static final Logger log = LoggerFactory.getLogger(Generate.class);
+
     /**
      * Two examples for Flux::generate()
      * 
      * @param args not used
      */
     public static void main(String[] args) {
+        log.trace("Enter");
+
         // A flux generated programmatically
         Flux<Integer> multiplesOfThree = Flux.generate(() -> 0, (state, sink) -> {
             sink.next(state * 3);
@@ -29,7 +36,7 @@ public class Generate {
             return state + 1;
         });
 
-        System.out.println("Multiples of three");
+        log.trace("Multiples of three");
         multiplesOfThree.subscribe(System.out::println);
 
         // The fibonacci sequence - when overflow is detected, the generation stops
@@ -42,7 +49,9 @@ public class Generate {
             return Tuples.of(state.getT2(), cur);
         });
 
-        System.out.println("Fibonacci");
+        log.trace("Fibonacci");
         fibonacci.subscribe(System.out::println);
+
+        log.trace("Exit");
     }
 }

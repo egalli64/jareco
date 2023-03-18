@@ -95,5 +95,7 @@ public class UsingSubscriber {
 
         System.out.println("Dice values with error on 4");
         MyPublishers.diceValuesNoFour().subscribe(new MySubscriber());
+
+        log.trace("Exit");
     }
 }
