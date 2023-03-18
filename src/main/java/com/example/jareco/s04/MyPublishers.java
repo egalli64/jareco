@@ -44,4 +44,22 @@ public class MyPublishers {
             }
         });
     }
+
+    /**
+     * A few values, some of them duplicated
+     * 
+     * @return a Flux
+     */
+    public static Flux<Integer> someDuplications() {
+        return Flux.just(3, 5, 2, 2, 3, 4, 6, 2);
+    }
+
+    /**
+     * A single value in a flux
+     * 
+     * @return a Flux
+     */
+    public static Flux<String> aFruitFlux() {
+        return Flux.just("Banana");
+    }
 }
