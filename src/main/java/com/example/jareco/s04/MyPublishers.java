@@ -5,6 +5,8 @@
  */
 package com.example.jareco.s04;
 
+import com.example.jareco.s03.Dog;
+
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -61,5 +63,23 @@ public class MyPublishers {
      */
     public static Flux<String> aFruitFlux() {
         return Flux.just("Banana");
+    }
+
+    /**
+     * A flux of dogs
+     * 
+     * @return a Flux
+     */
+    public static Flux<Dog> dogs() {
+        return Flux.just(new Dog(1, "Bob"), new Dog(6, "Kim"), new Dog(9, "Jim"));
+    }
+
+    /**
+     * A flux of strings
+     * 
+     * @return a Flux
+     */
+    public static Flux<String> sixFruits() {
+        return Flux.just("Lemon", "Peach", "Raspberry", "Ananas", "Apple", "Strawberry");
     }
 }
