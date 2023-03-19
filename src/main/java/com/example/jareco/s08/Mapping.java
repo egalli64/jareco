@@ -14,13 +14,18 @@ import com.example.jareco.s03.Dog;
 import reactor.core.publisher.Flux;
 
 /**
- * Mapping on Flux
+ * Mapping on Flux and Mono
  */
 public class Mapping {
+    /**
+     * A few examples on map(), flatMap(), flatMapMany()
+     * 
+     * @param args not used
+     */
     public static void main(String[] args) {
         Consumer<String> print = x -> System.out.print(x + " ");
 
-        // Map
+        // map()
         System.out.print("Map each dog to its name: ");
         Publishers.dogs().map(Dog::name).subscribe(print);
         System.out.println();
@@ -37,7 +42,7 @@ public class Mapping {
                 .map(f -> f.split("")) //
                 .subscribe(x -> System.out.println(Arrays.toString(x)));
 
-        // Raw use of flatMap
+        // Raw use of flatMap()
         System.out.print("These are the letters in the 'A' fruits: ");
         Publishers.sixFruits() //
                 .filter(f -> f.startsWith("A")) //
@@ -57,11 +62,17 @@ public class Mapping {
         System.out.println();
 
         // Flat mapping crossing fluxes
-        System.out.print("FlatMapping dogs with dice value as id: ");
+        System.out.print("Flat-mapping dogs with dice value as id: ");
         Publishers.diceValues() //
                 .flatMap(x -> Publishers.dogs().filter(dog -> dog.id() == x))
                 .subscribe(dog -> System.out.print(dog + " "));
         System.out.println();
 
+        // flatMapMany()
+        System.out.print("Flat-mapping to many, splitting a CSV string: ");
+        Publishers.fruitsCsv() //
+                .flatMapMany(csv -> Flux.fromArray(csv.split(","))) //
+                .subscribe(print);
+        System.out.println();
     }
 }

@@ -82,4 +82,13 @@ public class Publishers {
     public static Flux<String> sixFruits() {
         return Flux.just("Lemon", "Peach", "Raspberry", "Ananas", "Apple", "Strawberry");
     }
+
+    /**
+     * A CSV string as a mono
+     * 
+     * @return a Mono
+     */
+    public static Mono<String> fruitsCsv() {
+        return Mono.just("Lemon,Peach,Raspberry,Ananas,Apple,Strawberry");
+    }
 }
