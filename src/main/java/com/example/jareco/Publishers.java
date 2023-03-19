@@ -5,6 +5,8 @@
  */
 package com.example.jareco;
 
+import java.time.Duration;
+
 import com.example.jareco.s03.Dog;
 
 import reactor.core.publisher.Flux;
@@ -90,5 +92,15 @@ public class Publishers {
      */
     public static Mono<String> fruitsCsv() {
         return Mono.just("Lemon,Peach,Raspberry,Ananas,Apple,Strawberry");
+    }
+
+    /**
+     * A shared flux of ten ticks, each every delta ms
+     * 
+     * @param delta gap between generation of each tick
+     * @return a shared flux
+     */
+    public static Flux<Long> tenHotTicks(long delta) {
+        return Flux.interval(Duration.ofMillis(delta)).take(10).share();
     }
 }
