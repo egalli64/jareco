@@ -14,8 +14,8 @@ import reactor.core.publisher.Mono;
 /**
  * First approach to Publisher in Project Reactor
  */
-public class Publishers {
-    private static final Logger log = LoggerFactory.getLogger(Publishers.class);
+public class Publishing {
+    private static final Logger log = LoggerFactory.getLogger(Publishing.class);
 
     /**
      * Flux and Mono

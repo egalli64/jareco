@@ -3,7 +3,7 @@
  * 
  * https://github.com/egalli64/jareco
  */
-package com.example.jareco.s04;
+package com.example.jareco;
 
 import com.example.jareco.s03.Dog;
 
@@ -13,7 +13,7 @@ import reactor.core.publisher.Mono;
 /**
  * Some publishers for examples
  */
-public class MyPublishers {
+public class Publishers {
     /**
      * Just an Integer
      * 

@@ -9,7 +9,7 @@ import org.reactivestreams.Subscription;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.example.jareco.s04.MyPublishers;
+import com.example.jareco.Publishers;
 
 import reactor.core.publisher.BaseSubscriber;
 import reactor.core.publisher.SignalType;
@@ -88,13 +88,13 @@ public class UsingSubscriber {
         log.trace("Enter");
 
         System.out.println("Dice values");
-        MyPublishers.diceValues().subscribe(new MySubscriber());
+        Publishers.diceValues().subscribe(new MySubscriber());
 
         System.out.println("Dice values, requesting a cancel on 4");
-        MyPublishers.diceValues().subscribe(new MySubscriber(true));
+        Publishers.diceValues().subscribe(new MySubscriber(true));
 
         System.out.println("Dice values with error on 4");
-        MyPublishers.diceValuesNoFour().subscribe(new MySubscriber());
+        Publishers.diceValuesNoFour().subscribe(new MySubscriber());
 
         log.trace("Exit");
     }

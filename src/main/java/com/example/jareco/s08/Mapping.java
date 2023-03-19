@@ -8,8 +8,8 @@ package com.example.jareco.s08;
 import java.util.Arrays;
 import java.util.function.Consumer;
 
+import com.example.jareco.Publishers;
 import com.example.jareco.s03.Dog;
-import com.example.jareco.s04.MyPublishers;
 
 import reactor.core.publisher.Flux;
 
@@ -22,16 +22,16 @@ public class Mapping {
 
         // Map
         System.out.print("Map each dog to its name: ");
-        MyPublishers.dogs().map(Dog::name).subscribe(print);
+        Publishers.dogs().map(Dog::name).subscribe(print);
         System.out.println();
 
         System.out.print("Map each string to its uppercase version: ");
-        MyPublishers.sixFruits().map(String::toUpperCase).subscribe(print);
+        Publishers.sixFruits().map(String::toUpperCase).subscribe(print);
         System.out.println();
 
         // Why flatMap?
         System.out.println("I want the letters in the 'A' fruits: ");
-        MyPublishers.sixFruits() //
+        Publishers.sixFruits() //
                 .filter(f -> f.startsWith("A")) //
                 // map() gives a Flux of String[], not what I wanted!
                 .map(f -> f.split("")) //
@@ -39,7 +39,7 @@ public class Mapping {
 
         // Raw use of flatMap
         System.out.print("These are the letters in the 'A' fruits: ");
-        MyPublishers.sixFruits() //
+        Publishers.sixFruits() //
                 .filter(f -> f.startsWith("A")) //
                 // flatMap gives a Flux of String, good.
                 .flatMap(f -> Flux.just(f.split(""))) //
@@ -48,7 +48,7 @@ public class Mapping {
 
         // Make the result a bit nicer
         System.out.print("Letters in the 'A' fruits (lowercase, no duplicate): ");
-        MyPublishers.sixFruits() //
+        Publishers.sixFruits() //
                 .filter(f -> f.startsWith("A")) //
                 .map(String::toLowerCase) //
                 .flatMap(f -> Flux.just(f.split(""))) //
@@ -58,8 +58,8 @@ public class Mapping {
 
         // Flat mapping crossing fluxes
         System.out.print("FlatMapping dogs with dice value as id: ");
-        MyPublishers.diceValues() //
-                .flatMap(x -> MyPublishers.dogs().filter(dog -> dog.id() == x))
+        Publishers.diceValues() //
+                .flatMap(x -> Publishers.dogs().filter(dog -> dog.id() == x))
                 .subscribe(dog -> System.out.print(dog + " "));
         System.out.println();
 
