@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 
 import com.example.jareco.Publishers;
 
+import reactor.core.publisher.Flux;
 import reactor.core.scheduler.Schedulers;
 
 /**
@@ -54,6 +55,15 @@ public class Scheduling {
                 .publishOn(Schedulers.boundedElastic()) //
                 .map(String::length).subscribeOn(Schedulers.single()) //
                 .subscribe(x -> log.trace("Len: {}", x));
+        Thread.sleep(100);
+
+        System.out.println("Subscribe on main, flatMap on parallel");
+        Publishers.sixFruits() //
+                .log() //
+                .map(String::toLowerCase) //
+                .flatMap(f -> Flux.just(f.split("")).subscribeOn(Schedulers.parallel())) //
+                .distinct() //
+                .subscribe(System.out::println);
         Thread.sleep(100);
 
         System.out.println("Done");
