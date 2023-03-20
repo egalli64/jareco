@@ -12,6 +12,7 @@ import com.example.jareco.Publishers;
 import com.example.jareco.s03.Dog;
 
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 /**
  * Mapping on Flux and Mono
@@ -34,7 +35,20 @@ public class Mapping {
         Publishers.sixFruits().map(String::toUpperCase).subscribe(print);
         System.out.println();
 
-        // Why flatMap?
+        // Why flatMap? /1
+        System.out.print("From a mono with an id, map it to its dog name: ");
+        Mono.just(6) //
+                // maps an Integer to a Mono<Mono<Dog>>!
+                .map(id -> Publishers.dogs().filter(dog -> dog.id() == id).next()) //
+                .subscribe(x -> System.out.println(x.block()));
+
+        System.out.print("Flat-mapping a Mono<Mono<Dog>>: ");
+        Mono.just(6) //
+                .flatMap(id -> Publishers.dogs().filter(dog -> dog.id() == id).next()) //
+                .map(Dog::name) //
+                .subscribe(System.out::println);
+
+        // Why flatMap? /2
         System.out.println("I want the letters in the 'A' fruits: ");
         Publishers.sixFruits() //
                 .filter(f -> f.startsWith("A")) //
@@ -68,7 +82,7 @@ public class Mapping {
                 .subscribe(dog -> System.out.print(dog + " "));
         System.out.println();
 
-        // flatMapMany()
+        // flatMapMany() from Mono<String> to Flux<String>
         System.out.print("Flat-mapping to many, splitting a CSV string: ");
         Publishers.fruitsCsv() //
                 .flatMapMany(csv -> Flux.fromArray(csv.split(","))) //
