@@ -25,17 +25,37 @@ public class Scheduling {
      * @throws InterruptedException if sleep is interrupted
      */
     public static void main(String[] args) throws InterruptedException {
-        System.out.println("Publish on the single scheduler");
+        System.out.println("Subscribe on main, publish on single");
         Publishers.sixFruits() //
                 .publishOn(Schedulers.single()) //
+                .log() //
                 .subscribe(x -> log.trace(x));
-
-        System.out.println("Subscribe on the paraller scheduler");
-        Publishers.sixFruits() //
-                .subscribeOn(Schedulers.parallel()) //
-                .subscribe(x -> log.trace(x));
-
         Thread.sleep(100);
+
+        System.out.println("Subscribe on single");
+        Publishers.sixFruits() //
+                .log() //
+                .subscribeOn(Schedulers.single()) //
+                .subscribe(x -> log.trace(x));
+        Thread.sleep(100);
+
+        System.out.println("Subscribe on single, publish on parallel");
+        Publishers.sixFruits() //
+                .publishOn(Schedulers.parallel()) //
+                .log() //
+                .subscribeOn(Schedulers.single()) //
+                .subscribe(x -> log.trace(x));
+        Thread.sleep(100);
+
+        System.out.println("Subscribe on single, publish on parallel, then switch to bounded elastic");
+        Publishers.sixFruits() //
+                .publishOn(Schedulers.parallel()) //
+                .log() //
+                .publishOn(Schedulers.boundedElastic()) //
+                .map(String::length).subscribeOn(Schedulers.single()) //
+                .subscribe(x -> log.trace("Len: {}", x));
+        Thread.sleep(100);
+
         System.out.println("Done");
     }
 }
