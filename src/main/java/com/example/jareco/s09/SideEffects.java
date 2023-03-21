@@ -25,6 +25,7 @@ public class SideEffects {
         log.trace("Add behavior on mono");
         Publishers.solution() //
                 .doOnSubscribe(x -> log.trace("Subscription accepted")) //
+                .doOnRequest(r -> log.trace("Request({})", (r == Long.MAX_VALUE ? "unbounded" : r))) //
                 .doOnNext(x -> log.trace("Next is {}", x)) //
                 .doOnSuccess(x -> log.trace("Successfully completed on {}", x)) //
                 .doOnTerminate(() -> log.trace("Terminated")) //
