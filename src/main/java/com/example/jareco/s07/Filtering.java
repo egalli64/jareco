@@ -37,6 +37,14 @@ public class Filtering {
         Publishers.someDuplications().ignoreElements().subscribe(print);
         System.out.println();
 
+        System.out.print("Ignore sequence by then(): ");
+        Publishers.someDuplications().then().subscribe();
+        System.out.println();
+
+        System.out.print("Ignore sequence by then(), using Mono solution instead: ");
+        Publishers.someDuplications().then(Publishers.solution()).subscribe(print);
+        System.out.println();
+
         System.out.print("Filter just the element in position 4: ");
         Publishers.someDuplications().elementAt(4).subscribe(print);
         System.out.println();
