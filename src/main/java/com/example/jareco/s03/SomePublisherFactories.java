@@ -60,7 +60,12 @@ public class SomePublisherFactories {
         Stream<Dog> stDogs = liDogs.stream();
         Flux.fromStream(stDogs).subscribe(System.out::println);
 
+        // Flux::from() a publisher is used as source
         log.trace("A Flux<Dog> based on a Publisher");
         Flux.from(callDog).subscribe(System.out::println);
+
+        // Extra - Flux::defaultIfEmpty()
+        log.trace("A default added to an empty Flux");
+        Flux.empty().defaultIfEmpty(42).subscribe(System.out::println);
     }
 }
