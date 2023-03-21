@@ -98,5 +98,13 @@ public class Mapping {
                 .flatMapMany(csv -> Flux.fromArray(csv.split(","))) //
                 .subscribe(print);
         System.out.println();
+
+        // count()
+        System.out.print("Count the items: ");
+        Publishers.someDuplications().count().subscribe(System.out::println);
+
+        // collectList()
+        System.out.print("Put the items in a list: ");
+        Publishers.someDuplications().collectList().subscribe(System.out::println);
     }
 }
