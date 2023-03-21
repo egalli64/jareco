@@ -7,6 +7,7 @@ package com.example.jareco.s08;
 
 import java.util.Arrays;
 import java.util.function.Consumer;
+import java.util.function.Function;
 
 import com.example.jareco.Publishers;
 import com.example.jareco.s03.Dog;
@@ -19,7 +20,7 @@ import reactor.core.publisher.Mono;
  */
 public class Mapping {
     /**
-     * A few examples on map(), flatMap(), flatMapMany()
+     * A few examples on map(), mapNotNull(), flatMap(), flatMapMany()
      * 
      * @param args not used
      */
@@ -33,6 +34,15 @@ public class Mapping {
 
         System.out.print("Map each string to its uppercase version: ");
         Publishers.sixFruits().map(String::toUpperCase).subscribe(print);
+        System.out.println();
+
+        // Why mapNotNull()?
+        System.out.println("Mapping using a function that could return null: ");
+        Function<String, String> tasty = s -> s.length() > 5 ? s : null;
+
+        // Mapper should not return null!
+//        Publishers.sixFruits().map(tasty).filter(s -> s != null).subscribe(print);
+        Publishers.sixFruits().mapNotNull(tasty).subscribe(print);
         System.out.println();
 
         // Why flatMap? /1
