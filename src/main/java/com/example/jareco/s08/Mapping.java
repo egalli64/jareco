@@ -106,5 +106,20 @@ public class Mapping {
         // collectList()
         System.out.print("Put the items in a list: ");
         Publishers.someDuplications().collectList().subscribe(System.out::println);
+
+        // buffer()
+        System.out.print("Sum each sub-list of N values (the last one could have less elements): ");
+        Publishers.someDuplications().buffer(3) //
+                .map(ls -> ls.stream().mapToInt(Integer::intValue).sum()) //
+                .subscribe(v -> System.out.print(v + " "));
+        System.out.println();
+
+        // zipWith() for tuple
+        System.out.print("Merge two monos is a tuple-mono: ");
+        Publishers.solution().zipWith(Mono.just("Hi")).subscribe(System.out::println);
+
+        // zipWith() with function
+        System.out.print("Add the values in two monos is a new mono: ");
+        Publishers.solution().zipWith(Mono.just(12), (x, y) -> x + y).subscribe(System.out::println);
     }
 }
